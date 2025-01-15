@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm start
+      - run: npm test
 
   merged-test:
     needs: build
