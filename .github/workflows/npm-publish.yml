@@ -19,11 +19,12 @@ jobs:
   merged-test:
     needs: build
     if: always()
+    runs-on: ubuntu-latest
     steps:
       - name:
         if: |
           github.event_name == 'pull_request' &&
           github.event.action == 'closed' &&
           github.event.pull_request.merged == true
-        runs-on: ubuntu-latest
-            run: echo "PR merged job"
+
+        run: echo "PR merged job"
