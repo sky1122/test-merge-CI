@@ -6,22 +6,22 @@ name: Node.js Package
 on:
   release:
     types: [created]
-
-jobs-start:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm start
-jobs-merged-test:
-  needs: jobs-start
-  if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-  run: |
-    echo The PR was merged  
+jobs:
+  start:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - run: npm ci
+        - run: npm start
+  merged-test:
+    needs: jobs-start
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    run: |
+      echo The PR was merged  
 
 
 
