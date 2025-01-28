@@ -31,7 +31,7 @@ jobs:
       - name:
         if: |
           ${{
-            needs.build.outputs.has_creds == 'true'
+            needs.build.outputs.has_creds == 'true' &&
             github.event_name == 'pull_request' &&
             github.event.action == 'closed' &&
             github.event.pull_request.merged == true
