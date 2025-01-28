@@ -37,12 +37,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name:
-        if: |
-          ${{
+        if: 
             needs.build.outputs.has_creds == 'true' &&
             github.event_name == 'pull_request' &&
             github.event.action == 'closed' &&
             github.event.pull_request.merged == true
-          }}
+
 
         run: echo "PR merged job"
