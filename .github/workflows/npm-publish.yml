@@ -7,12 +7,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      has_creds: ${{ steps.vars.outputs.has_creds}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
+      - name: Set output variables
+        id: vars
+        run: |
+          has_creds=${{ github.actor != 'dependabot[bot]' }}
+          echo "has_creds=$has_creds" >> $GITHUB_OUTPUT
       - name: Intentional failure
         run: exit 1  # This step will always fail
 
@@ -22,9 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name:
-        if: >-
-          github.event_name == 'pull_request' &&
-          github.event.action == 'closed' &&
-          github.event.pull_request.merged == true
+        if: |
+          ${{
+            needs.build.outputs.has_creds == 'true'
+            github.event_name == 'pull_request' &&
+            github.event.action == 'closed' &&
+            github.event.pull_request.merged == true
+          }}
+
 
         run: echo "PR merged job"
