@@ -37,4 +37,5 @@ jobs:
             github.event.pull_request.merged == true
           }}
 
+
         run: echo "PR merged job"
