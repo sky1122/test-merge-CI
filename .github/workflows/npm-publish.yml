@@ -37,8 +37,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name:
-        if: 
-            needs.build.outputs.has_creds == 'true' &&
+        if:
+            ${{ needs.build.outputs.has_creds == 'true' }} &&
             github.event_name == 'pull_request' &&
             github.event.action == 'closed' &&
             github.event.pull_request.merged == true
